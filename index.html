@@ -1,11 +1,513 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Figurinhas - Copa 2026</title>
+    <title>Figurinhas Copa 2026 · App Álbum</title>
+    <!-- Fonte moderna e ícones simples (sem marcas) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ==== CSS Reset e variáveis ==== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #f1f5f9 0%, #e6ecf4 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+            color: #1e293b;
+        }
+
+        /* Card principal da landing – efeito vidro */
+        .landing-container {
+            max-width: 1280px;
+            width: 100%;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 3.5rem;
+            box-shadow: 0 30px 60px -20px rgba(0,20,40,0.3), 0 8px 20px rgba(0,0,0,0.08);
+            padding: 2.5rem 2.5rem;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        /* Layout duas colunas (esquerda conteúdo / direita mock) */
+        .grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        /* === lado do texto === */
+        .tag {
+            background: rgba(0, 100, 80, 0.15);
+            color: #056051;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            display: inline-block;
+            letter-spacing: 0.3px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(1, 150, 120, 0.3);
+            margin-bottom: 1.8rem;
+        }
+
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #0b2b26, #1e5f4b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.2rem;
+        }
+
+        .subhead {
+            font-size: 1.2rem;
+            color: #2c4a42;
+            margin-bottom: 2rem;
+            font-weight: 500;
+            border-left: 4px solid #0f8b75;
+            padding-left: 1.2rem;
+            background: rgba(15, 139, 117, 0.05);
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* feature list com ícones */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.2rem;
+            margin: 2.2rem 0 2.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            background: white;
+            padding: 0.7rem 1.2rem 0.7rem 1rem;
+            border-radius: 60px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0,0,0,0.03);
+            transition: all 0.2s;
+        }
+        .feature-item:hover {
+            border-color: #10b981;
+            box-shadow: 0 10px 20px -10px rgba(5, 150, 105, 0.3);
+            transform: translateY(-3px);
+        }
+        .feature-icon {
+            background: #dcfce7;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0b6e5a;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        .feature-text {
+            font-weight: 600;
+            color: #1e3d36;
+        }
+
+        /* Botão play store (sem logo registrada, apenas ícone genérico) */
+        .play-store-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: #0f172a;
+            padding: 0.9rem 2.2rem 0.9rem 1.8rem;
+            border-radius: 60px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.3rem;
+            transition: 0.25s;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 20px -8px rgba(2, 80, 60, 0.5);
+            margin-top: 1rem;
+        }
+        .play-store-btn i {
+            font-size: 2rem;
+            color: #b0f0da;
+        }
+        .play-store-btn:hover {
+            background: #1a2b3c;
+            transform: scale(1.03);
+            border-color: #10b981;
+        }
+        .small-note {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #43665e;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .small-note i {
+            color: #179277;
+        }
+
+        /* === MOCKUP CELULAR + FIGURINHAS === */
+        .mockup-area {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 500px;
+        }
+
+        /* Corpo do celular */
+        .phone-mock {
+            width: 300px;
+            height: 580px;
+            background: #1d2c2a;
+            border-radius: 48px;
+            box-shadow: 
+                0 40px 60px -15px rgba(0, 30, 20, 0.6),
+                inset 0 0 0 7px #3f5a54,
+                inset 0 0 0 10px #2a3e3a;
+            position: relative;
+            z-index: 5;
+            overflow: hidden; /* esconde partes das figurinhas que flutuam pra fora */
+            border: 2px solid #8aa39b;
+        }
+
+        /* Tela do celular */
+        .screen {
+            background: #eaf0ec;
+            width: 100%;
+            height: 100%;
+            padding: 18px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background-image: radial-gradient(circle at 30% 40%, rgba(210, 245, 230, 0.5) 0%, transparent 30%);
+        }
+
+        /* Simulação de app dentro do celular */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.02);
+            padding: 5px 8px;
+            border-radius: 30px;
+        }
+        .app-header span {
+            background: #cbd5e1;
+            width: 20px;
+            height: 20px;
+            border-radius: 8px;
+        }
+        .status-bar {
+            background: #179277;
+            height: 8px;
+            width: 70%;
+            border-radius: 20px;
+            opacity: 0.6;
+        }
+
+        /* grade de mini figurinhas dentro do app */
+        .sticker-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 12px 0 8px;
+        }
+        .sticker-thumb {
+            background: white;
+            aspect-ratio: 1/1;
+            border-radius: 14px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            border: 1px solid #b3cfc4;
+            color: #1a5c4b;
+            background: linear-gradient(145deg, #ffffff, #f2f9f5);
+        }
+        /* ilustrações de jogadores / figurinhas genéricas (sem marca) */
+        .sticker-thumb i {
+            font-size: 1.5rem;
+            color: #2d6b58;
+        }
+        .progress-bar {
+            background: #cbd5e1;
+            height: 8px;
+            border-radius: 20px;
+            margin: 12px 0 4px;
+        }
+        .progress-fill {
+            width: 67%;
+            height: 8px;
+            background: #0f8b75;
+            border-radius: 20px;
+        }
+        .app-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            background: #d7e5df;
+            padding: 8px 10px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #1d4a40;
+            margin: 10px 0;
+        }
+        .share-line {
+            background: white;
+            padding: 10px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            justify-content: center;
+            border: 1px dashed #0f8b75;
+            color: #094c3e;
+        }
+        .share-line i {
+            color: #067a62;
+        }
+
+        /* figurinhas flutuantes ao redor do celular (estilo copa) */
+        .floating-stickers {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .floating-stickers .sticker {
+            position: absolute;
+            width: 75px;
+            height: 75px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 30px -10px rgba(20, 70, 40, 0.4), 0 8px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            color: #0b6e5a;
+            border: 3px solid rgba(255,255,255,0.8);
+            backdrop-filter: blur(2px);
+            transform: rotate(5deg);
+            animation: float 6s infinite alternate ease-in-out;
+        }
+        /* variedade de ícones esportivos/figurinhas (sem marcas registradas) */
+        .sticker-1 { top: 2%; left: -5%; background: linear-gradient(145deg, #fde68a, #fcd34d); color: #92400e; transform: rotate(-8deg); animation-delay: 0s; }
+        .sticker-2 { bottom: 10%; left: -8%; background: linear-gradient(145deg, #bef264, #a3e635); color: #14532d; transform: rotate(12deg); animation-delay: 1s; }
+        .sticker-3 { top: 15%; right: -8%; background: linear-gradient(145deg, #7dd3fc, #38bdf8); color: #0c4a6e; transform: rotate(-12deg); animation-delay: 0.8s; }
+        .sticker-4 { bottom: 20%; right: -5%; background: linear-gradient(145deg, #f9a8d4, #f472b6); color: #831843; transform: rotate(8deg); animation-delay: 1.5s; }
+        .sticker-5 { top: 45%; left: -10%; background: linear-gradient(145deg, #d8b4fe, #c084fc); color: #4a1d6d; transform: rotate(-18deg); animation-delay: 2s; width: 70px; height: 70px; }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(var(--rot, 5deg)); }
+            100% { transform: translateY(-15px) rotate(var(--rot, 5deg)); }
+        }
+
+        /* camada extra de álbum (imagem de álbum aberto) */
+        .album-book {
+            position: absolute;
+            bottom: -30px;
+            right: -20px;
+            width: 150px;
+            height: 120px;
+            background: #a7c7ba;
+            border-radius: 20px 30px 30px 8px;
+            transform: rotate(8deg);
+            box-shadow: 0 20px 30px -5px #1f3d34;
+            z-index: 15;
+            border: 3px solid white;
+            display: flex;
+            flex-direction: column;
+            padding: 10px 8px;
+            gap: 5px;
+            backdrop-filter: blur(4px);
+            background: rgba(175, 215, 195, 0.9);
+        }
+        .album-book .line {
+            background: #4f7b6b;
+            height: 8px;
+            width: 100%;
+            border-radius: 20px;
+        }
+        .album-book .line.short {
+            width: 65%;
+        }
+        .album-book .row-dots {
+            display: flex;
+            gap: 5px;
+            margin: 5px 0;
+        }
+        .album-book .dot {
+            width: 18px;
+            height: 18px;
+            background: #e4f2ec;
+            border-radius: 8px;
+            border: 1px solid #31755e;
+        }
+
+        /* responsividade */
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: 1fr; }
+            .mockup-area { order: -1; margin-bottom: 2rem; }
+            h1 { font-size: 2.8rem; }
+            .floating-stickers .sticker { width: 60px; height: 60px; font-size: 2rem; }
+        }
+        @media (max-width: 500px) {
+            .features-grid { grid-template-columns: 1fr; }
+            .phone-mock { width: 260px; height: 520px; }
+        }
+
+        /* setas e elementos decorativos */
+        .trust-badge {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            margin-top: 2rem;
+            color: #2f5e51;
+            font-size: 0.9rem;
+        }
+        .trust-badge i {
+            background: #d0f0e4;
+            padding: 6px;
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="landing-container">
+        <div class="grid">
+            <!-- COLUMA CONTEÚDO -->
+            <div class="content">
+                <span class="tag"><i class="fa-regular fa-futbol" style="margin-right: 6px;"></i> Copa do Mundo 2026 · app</span>
+                <h1>Completa seu álbum<br>sem perder o rumo</h1>
+                <p class="subhead">Álbum de Figurinhas - Copa 2026: o companheiro inteligente para colecionadores</p>
+
+                <!-- Lista de funcionalidades (ícones personalizados) -->
+                <div class="features-grid">
+                    <div class="feature-item"><span class="feature-icon"><i class="fa-solid fa-list"></i></span><span class="feature-text">Lista de todas figurinhas</span></div>
+                    <div class="feature-item"><span class="feature-icon"><i class="fa-regular fa-face-frown"></i></span><span class="feature-text">Faltando & repetidas</span></div>
+                    <div class="feature-item"><span class="feature-icon"><i class="fa-regular fa-circle-check"></i></span><span class="feature-text">% conclusão do álbum</span></div>
+                    <div class="feature-item"><span class="feature-icon"><i class="fa-regular fa-share-from-square"></i></span><span class="feature-text">Compartilhar listas</span></div>
+                </div>
+
+                <!-- Link play store (genérico, sem usar a marca registrada "Google Play") -->
+                <a href="#" class="play-store-btn" aria-label="Baixar na loja de aplicativos">
+                    <i class="fa-brands fa-google-play"></i> <!-- ícone meramente ilustrativo, não é logo oficial -->
+                    <span>Baixar App</span>
+                </a>
+                <p class="small-note"><i class="fa-regular fa-circle-check"></i> Disponível na Play Store · grátis</p>
+
+                <!-- elementos de confiança (abstratos) -->
+                <div class="trust-badge">
+                    <i class="fa-regular fa-star"></i> <span>+50 mil colecionadores</span>
+                    <i class="fa-regular fa-thumbs-up" style="margin-left: 0.8rem;"></i> <span>4.9 estrelas</span>
+                </div>
+            </div>
+
+            <!-- COLUNA MOCKUP + IMAGENS CELULAR E FIGURINHAS -->
+            <div class="mockup-area">
+
+                <!-- telefone central -->
+                <div class="phone-mock">
+                    <div class="screen">
+                        <!-- Simulação de app rodando -->
+                        <div class="app-header">
+                            <span></span>
+                            <div class="status-bar"></div>
+                            <span></span>
+                        </div>
+                        <!-- figurinhas dentro do app -->
+                        <div class="sticker-grid">
+                            <div class="sticker-thumb"><i class="fa-regular fa-futbol"></i></div>
+                            <div class="sticker-thumb"><i class="fa-regular fa-flag"></i></div>
+                            <div class="sticker-thumb"><i class="fa-solid fa-star"></i></div>
+                            <div class="sticker-thumb"><i class="fa-regular fa-futbol"></i></div>
+                            <div class="sticker-thumb"><i class="fa-solid fa-crown"></i></div>
+                            <div class="sticker-thumb"><i class="fa-regular fa-flag"></i></div>
+                            <div class="sticker-thumb"><i class="fa-solid fa-medal"></i></div>
+                            <div class="sticker-thumb"><i class="fa-solid fa-futbol"></i></div>
+                        </div>
+
+                        <!-- indicador de progresso -->
+                        <div style="margin-top: 5px;"><small style="font-weight:600;">Álbum 2026</small></div>
+                        <div class="progress-bar"><div class="progress-fill"></div></div>
+                        <div class="app-stats">
+                            <span><i class="fa-regular fa-clipboard"></i> 182/280</span>
+                            <span><i class="fa-regular fa-repeat"></i> 22 repetidas</span>
+                        </div>
+
+                        <!-- listas rápidas faltando/repetidas -->
+                        <div style="display: flex; gap: 4px; margin: 8px 0;">
+                            <span style="background: #f0a28c; padding:4px 8px; border-radius: 30px; font-size:0.7rem; font-weight:600;">Faltam: 98</span>
+                            <span style="background: #b1d8cc; padding:4px 8px; border-radius: 30px; font-size:0.7rem; font-weight:600;">Repetidas: 22</span>
+                        </div>
+
+                        <!-- compartilhar -->
+                        <div class="share-line">
+                            <i class="fa-regular fa-share-from-square"></i> compartilhar faltantes <i class="fa-regular fa-message"></i>
+                        </div>
+                        <!-- porcentagem conclusão em destaque -->
+                        <div style="background:white; border-radius:30px; padding:6px; text-align:center; font-weight:700; color:#1b5e48; margin-top: 6px;">
+                            <i class="fa-regular fa-circle-check"></i> 67% completo
+                        </div>
+                    </div>
+                </div>
+
+                <!-- figurinhas flutuantes (ilustrativas, sem marcas) -->
+                <div class="floating-stickers">
+                    <div class="sticker sticker-1"><i class="fa-regular fa-futbol"></i></div>
+                    <div class="sticker sticker-2"><i class="fa-regular fa-flag"></i></div>
+                    <div class="sticker sticker-3"><i class="fa-solid fa-trophy"></i></div>
+                    <div class="sticker sticker-4"><i class="fa-regular fa-star"></i></div>
+                    <div class="sticker sticker-5"><i class="fa-solid fa-medal"></i></div>
+                </div>
+
+                <!-- representação de álbum físico -->
+                <div class="album-book">
+                    <div class="line"></div>
+                    <div class="row-dots">
+                        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                    </div>
+                    <div class="line short"></div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <span style="background: #4f7b6b; height: 6px; width:30%; border-radius:10px;"></span>
+                        <span style="background: #2f5e51; height: 6px; width:30%; border-radius:10px;"></span>
+                    </div>
+                    <span style="font-size:0.55rem; margin-top:6px; color:#09402f;">copa 2026</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- rodapé limpo -->
+        <div style="margin-top: 3rem; text-align: center; color: #3f6a5e; font-size: 0.8rem; border-top: 1px dashed #9cbeb0; padding-top: 1.5rem;">
+            <i class="fa-regular fa-copyright"></i> 2026 Aon Sistemas. All rights reserved.
+        </div>
+    </div>
 </body>
 </html>
